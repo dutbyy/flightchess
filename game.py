@@ -51,11 +51,11 @@ class Shower:
     def __init__(self):
         from pyshow import RenderApi
         config = {
-            "range_x": [-700, 700],
-            "range_y": [-500, 500],
-            "display_size": [1400, 1000],
+            "range_x": [0, 1920],
+            "range_y": [0, 1080],
+            "display_size": [1600, 900],
             "tcolor": (0,0,0),
-            'bg_img': 'bgp.png',
+            'bg_img': 'new_bg.png',
             'fontsize': 28
         }
         self.render = RenderApi(config)
@@ -63,9 +63,9 @@ class Shower:
         with open('position.json') as f :
             self.poses = json.load(f)
         self.data = [
-            { 'icon': 'obj',   'position': [450, 250],      'side': 'white',    'iconsize': 90  },
-            { 'icon': 'chess', 'position': self.poses[0],   'side': 'blue',     'iconsize': 120 },
-            { 'icon': 'chess', 'position': self.poses[10],  'side': 'red',      'iconsize': 120 }
+            { 'icon': 'obj',   'position': [1500, 770],      'side': 'white',    'iconsize': 96 },
+            { 'icon': 'chess', 'position': self.poses[0],   'side': 'blue',     'iconsize': 128 },
+            { 'icon': 'chess', 'position': self.poses[10],  'side': 'red',      'iconsize': 128 }
         ]
 
 
@@ -93,7 +93,7 @@ class Shower:
 
     def init_text(self):
         infos = []
-        for i in range(50):
+        for i in range(1,49):
             block = [
                 {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-5],  'side':'blue', 'iconsize': 1, 'textsize': 15},
                 {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-35],  'side':'blue', 'iconsize': 1, 'textsize': 15},
@@ -104,9 +104,9 @@ class Shower:
 
     def update_text(self, info):
         info_data = [
-            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [250, 30],  'side':'blue', 'iconsize': 1, 'textsize': 28},
-            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [250, -30],   'side':'blue', 'iconsize': 1, 'textsize': 28},
-            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [250, -90], 'side':'blue', 'iconsize': 1, 'textsize': 28},
+            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 590],  'side':'blue', 'iconsize': 1, 'textsize': 28},
+            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 515],   'side':'blue', 'iconsize': 1, 'textsize': 28},
+            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 440], 'side':'blue', 'iconsize': 1, 'textsize': 28},
         ]
         self.render.update({"units": self.infos + self.data + info_data})
         time.sleep(1)
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     game.init_text()
     while True:
         game.throw_show()
-        game.update_chess(random.randint(0,49), random.randint(0,49))
+        game.update_chess(random.randint(0,48), random.randint(0,48))
         game.update_text('')
 
 
