@@ -2,6 +2,7 @@ import json
 import random
 import time
 import numpy as np
+from tools import gen_position
 
 def get_info():
     with open('conf.json') as f:
@@ -53,21 +54,19 @@ class Shower:
         config = {
             "range_x": [0, 1920],
             "range_y": [0, 1080],
-            "display_size": [1600, 900],
+            "display_size": [2560, 1600],
             "tcolor": (0,0,0),
             'bg_img': 'new_bg.png',
             'fontsize': 28
         }
         self.render = RenderApi(config)
         self.render.init()
-        with open('position.json') as f :
-            self.poses = json.load(f)
+        self.poses = gen_position()
         self.data = [
             { 'icon': 'obj',   'position': [1500, 770],      'side': 'white',    'iconsize': 96 },
             { 'icon': 'chess', 'position': self.poses[0],   'side': 'blue',     'iconsize': 128 },
             { 'icon': 'chess', 'position': self.poses[10],  'side': 'red',      'iconsize': 128 }
         ]
-
 
     def throw_show(self):
         for t in range(30):
@@ -82,6 +81,7 @@ class Shower:
         red_old_position =  self.data[2]['position']
         blue_new_postion = self.poses[blue_point]
         red_new_postion = self.poses[red_point]
+
         blues_x = np.linspace(blue_old_position[0], blue_new_postion[0], 10)
         blues_y = np.linspace(blue_old_position[1], blue_new_postion[1], 10)
         reds_x = np.linspace(red_old_position[0], red_new_postion[0], 10)
@@ -95,18 +95,18 @@ class Shower:
         infos = []
         for i in range(1,49):
             block = [
-                {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-5],  'side':'blue', 'iconsize': 1, 'textsize': 15},
-                {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-35],  'side':'blue', 'iconsize': 1, 'textsize': 15},
-                {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-65],  'side':'blue', 'iconsize': 1, 'textsize': 15}
+                {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-5],  'side':'blue', 'iconsize': 1, 'textsize': 26},
+                {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-35],  'side':'blue', 'iconsize': 1, 'textsize': 26},
+                {'icon': 'nothing', 'name': '这是测试文本', 'position': [self.poses[i][0]-5, self.poses[i][1]-65],  'side':'blue', 'iconsize': 1, 'textsize': 26}
             ]
             infos.extend(block)
         self.infos = infos
 
     def update_text(self, info):
         info_data = [
-            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 590],  'side':'blue', 'iconsize': 1, 'textsize': 28},
-            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 515],   'side':'blue', 'iconsize': 1, 'textsize': 28},
-            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 440], 'side':'blue', 'iconsize': 1, 'textsize': 28},
+            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 590],  'side':'blue', 'iconsize': 1, 'textsize': 42},
+            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 515],   'side':'blue', 'iconsize': 1, 'textsize': 42},
+            {'icon': 'nothing', 'name': '这是测试文本'*2, 'position': [1280, 440], 'side':'blue', 'iconsize': 1, 'textsize': 42},
         ]
         self.render.update({"units": self.infos + self.data + info_data})
         time.sleep(1)
